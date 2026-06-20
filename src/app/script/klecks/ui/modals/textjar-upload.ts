@@ -26,6 +26,7 @@ async function uploadToTextjar(
     const response = await fetch(endpointUrl, {
         method: 'POST',
         body: formData,
+        credentials: 'include', // Support Cloudflare Access authentication cookies
     });
 
     if (!response.ok) {
@@ -126,10 +127,14 @@ export function textjarUpload(
                 }
 
                 // Show basic loading status
-                const loadingPopup = KL.popup({
+                let closeLoading: (() => void) | undefined;
+                KL.popup({
                     type: 'ok',
                     message: 'Uploading to Textjar...',
                     buttons: [],
+                    closeFunc: (close) => {
+                        closeLoading = close;
+                    },
                 });
 
                 try {
@@ -141,7 +146,9 @@ export function textjarUpload(
                     );
 
                     // Close loading popup
-                    loadingPopup.close();
+                    if (closeLoading) {
+                        closeLoading();
+                    }
 
                     KL.popup({
                         type: 'ok',
@@ -150,7 +157,9 @@ export function textjarUpload(
                     });
                     onUploaded();
                 } catch (e: any) {
-                    loadingPopup.close();
+                    if (closeLoading) {
+                        closeLoading();
+                    }
                     KL.popup({
                         type: 'error',
                         message: `Upload Failed:<br><b>${e.message || 'Connection error'}</b>`,
