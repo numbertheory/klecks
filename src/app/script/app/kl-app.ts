@@ -1826,6 +1826,14 @@ export class KlApp {
                           () => this.updateLastSaved(),
                       );
                   },
+                  onUploadTextjar: () => {
+                      applyUncommitted();
+                      KL.textjarUpload(
+                          this.klCanvas,
+                          this.rootEl,
+                          () => this.updateLastSaved(),
+                      );
+                  },
                   applyUncommitted: () => applyUncommitted(),
                   onChangeShowSaveDialog: (b) => {
                       this.saveToComputer.setShowSaveDialog(b);

@@ -47,6 +47,7 @@ export type TFileUiParams = {
     onNewImage: () => void;
     onShareImage: (callback: () => void) => void;
     onUpload: () => void;
+    onUploadTextjar?: () => void;
     applyUncommitted: () => void;
     onChangeShowSaveDialog: (b: boolean) => void;
     klRecoveryManager?: KlRecoveryManager;
@@ -311,6 +312,20 @@ export class FileUi {
                     p.onUpload();
                 },
             });
+            const uploadTextjarButton = p.onUploadTextjar ? BB.el({
+                tagName: 'button',
+                className: 'grid-button',
+                content: createButtonContent('Textjar', uploadImg),
+                custom: {
+                    tabIndex: '-1',
+                },
+                css: {
+                    cssFloat: 'left',
+                },
+                onClick: () => {
+                    p.onUploadTextjar!();
+                },
+            }) : undefined;
 
             BB.append(this.rootEl, [
                 saveNote,
@@ -324,6 +339,7 @@ export class FileUi {
                 createSpacer(),
                 recoveryWrapper,
                 uploadImgurButton,
+                uploadTextjarButton,
                 BB.canShareFiles() ? shareButton : undefined,
                 BB.el({ css: { clear: 'both' } }),
             ]);

@@ -52,6 +52,7 @@ import { ProjectStore } from './storage/project-store';
 import { FileUi } from './ui/tool-tabs/file-ui';
 import { EditUi } from './ui/tool-tabs/edit-ui';
 import { imgurUpload } from './ui/modals/imgur-upload';
+import { textjarUpload } from './ui/modals/textjar-upload';
 import { loadAgPsd } from './storage/load-ag-psd';
 import { SaveReminder } from './ui/components/save-reminder';
 import { SaveToComputer } from './storage/save-to-computer';
@@ -138,6 +139,7 @@ export const KL = {
     showImportImageDialog,
     showIframePopup: showIframeModal,
     imgurUpload,
+    textjarUpload,
 
     // --- ui - tool tabs ---
     HandUi,
